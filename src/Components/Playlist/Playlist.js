@@ -6,10 +6,19 @@ export class Playlist extends React.Component{
     constructor(props){
         super(props);
         this.handleNameChange = this.handleNameChange.bind(this);
+        this.state = {
+            isLoading: true
+        }
     }
 
     handleNameChange(event){
         this.props.onNameChange(event.target.value);
+    }
+
+    componentDidMount(){
+        this.setState(
+            {isLoading: false}
+        )
     }
 
 
@@ -17,6 +26,7 @@ export class Playlist extends React.Component{
         return(
             <div className="Playlist">
             <input value={this.props.playlistName} onChange={this.handleNameChange}/>
+            {this.isLoading ? <p>Loading...</p> : <p></p> }
             <TrackList tracks={this.props.playlistTracks} onRemove={this.props.onRemove} isRemoval={true}/>
                
             <button className="Playlist-save" onClick={this.props.onSave}>SAVE TO SPOTIFY</button>
